@@ -1,7 +1,7 @@
 const figlet = require('figlet');
 const boxen = require('boxen');
 const inquirer = require('inquirer');  // For the command-line menu
-const { viewDepartments, addDepartment } = require('./db/index');
+const { viewEmployees, addEmployee, updateEmployeeRole, viewRoles, addRole, viewDepartments, addDepartment } = require('./db/index');
 
 // Display banner and start menu
 function showBanner() {
