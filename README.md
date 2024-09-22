@@ -65,7 +65,7 @@ node index.js
 •	View employees by manager or department.
 •	Remove employees, roles, or departments.
 
-![Walkthrough Video]()
+![Walkthrough Video](https://drive.google.com/file/d/1dMHIO_uBVVycaI1JfX9E-tCu8FtZurcZ/view?usp=sharing)
 
 ## Features
 
