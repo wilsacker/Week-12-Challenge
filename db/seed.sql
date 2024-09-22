@@ -116,27 +116,27 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ('Reese', 'Williams', 5, 4),  -- Social Media Specialist, under Marketing Manager
 
 -- HR Department
-('Leslie', 'Parker', 20, 1),  -- HR Manager
-('Frank', 'Garcia', 21, 20),  -- Recruiter
-('Ava', 'Morris', 22, 20),  -- Payroll Specialist
+('Leslie', 'Parker', 16, 1),  -- HR Manager
+('Frank', 'Garcia', 17, 20),  -- Recruiter
+('Ava', 'Morris', 18, 20),  -- Payroll Specialist
 
 -- Legal Department
-('Riley', 'Ford', 23, 1),  -- Head of Legal
-('Maya', 'Turner', 24, 23),  -- Contract Specialist
+('Riley', 'Ford', 19, 1),  -- Head of Legal
+('Maya', 'Turner', 20, 23),  -- Contract Specialist
 
 -- A&R Department
-('Taylor', 'Adams', 25, 1),  -- A&R Director
-('Chris', 'Watts', 26, 25),  -- A&R Scout
+('Taylor', 'Adams', 21, 1),  -- A&R Director
+('Chris', 'Watts', 22, 25),  -- A&R Scout
 
 -- Operations
-('Sarah', 'Lee', 27, 1),  -- Studio Manager
-('James', 'Clark', 28, 27),  -- Operations Manager
+('Sarah', 'Lee', 23, 1),  -- Studio Manager
+('James', 'Clark', 24, 27),  -- Operations Manager
 
 -- IT Department
-('Jesse', 'Brown', 29, 1),  -- IT Manager
-('Emma', 'Rodriguez', 30, 29),  -- IT Support Specialist
+('Jesse', 'Brown', 25, 1),  -- IT Manager
+('Emma', 'Rodriguez', 26, 29),  -- IT Support Specialist
 
 -- Creative Team
-('Chris', 'Rivera', 31, 1),  -- Creative Director
-('Alex', 'Sims', 32, 31),  -- Graphic Designer
-('Jordan', 'Taylor', 33, 31);  -- Videographer
+('Chris', 'Rivera', 27, 1),  -- Creative Director
+('Alex', 'Sims', 28, 31),  -- Graphic Designer
+('Jordan', 'Taylor', 29, 31);  -- Videographer
