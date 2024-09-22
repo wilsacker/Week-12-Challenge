@@ -241,10 +241,11 @@ function addRole() {
         message: 'Which department does the role belong to?',
         choices: departmentChoices,
       },
-    ])
-      .then((role) => db.createRole(role))
-      .then(() => console.log(`Added role to the database`))
-      .then(() => init());  // Return to main menu after adding role
+    ]).then((role) => {
+      db.createRole(role.title, role.salary, role.department_id)
+        .then(() => console.log(`Added ${role.title} to the database`))
+        .then(() => init());  // Return to main menu after adding role
+    });
   });
 }
 
