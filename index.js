@@ -163,8 +163,11 @@ function addEmployee() {
                 last_name: lastName,
               };
 
-              db.createEmployee(employee)
-                .then(() => console.log(`Added ${firstName} ${lastName} to the database`))
+              console.log("Employee being added:", employee);  // Log for debugging
+
+              // Now pass the arguments individually
+              db.createEmployee(employee.first_name, employee.last_name, employee.role_id, employee.manager_id)
+                .then(() => console.log(`Added ${employee.first_Name} ${employee.last_Name} to the database`))
                 .then(() => init());  // Return to main menu after adding employee
             });
         });
@@ -181,7 +184,7 @@ function updateEmployeeRole() {
       value: id,
     }));
 
-    prompt({
+    inquirer.prompt({
       type: 'list',
       name: 'employeeId',
       message: "Which employee's role do you want to update?",
@@ -195,7 +198,7 @@ function updateEmployeeRole() {
           value: id,
         }));
 
-        prompt({
+        inquirer.prompt({
           type: 'list',
           name: 'roleId',
           message: 'Which role do you want to assign to the selected employee?',
@@ -266,7 +269,7 @@ function addDepartment() {
   })
     .then((res) => {
       let departmentName = res.name;
-      return db.createDepartment({ name: departmentName });
+      return db.createDepartment(departmentName);
     })
     .then(() => console.log(`Added department to the database`))
     .then(() => init());  // Return to main menu after adding department

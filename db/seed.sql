@@ -68,75 +68,75 @@ INSERT INTO role (title, salary, department_id) VALUES
 -- Artists (Some artists are directly employed by the label)
 ('Artist', 75000, 5);
 
--- Insert initial employees (without manager_id)
-INSERT INTO employee (first_name, last_name, role_id) VALUES 
--- Executive Management
-('Alex', 'Johnson', 1),  -- CEO
-('Dana', 'Fitzgerald', 2),  -- CFO
-('Chris', 'Williams', 3),  -- COO
+-- Insert initial employees with manager_id set properly
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
+-- Executive Management (No manager for CEO)
+('Alex', 'Johnson', 1, NULL),  -- CEO
+('Dana', 'Fitzgerald', 2, 1),  -- CFO reports to CEO
+('Chris', 'Williams', 3, 1),  -- COO reports to CEO
 
 -- Marketing Team
-('Jessie', 'Kim', 4),  -- Marketing Manager
-('Taylor', 'Brooks', 5),  -- Social Media Specialist
-('Jordan', 'Reed', 6),  -- Branding Strategist
+('Jessie', 'Kim', 4, 1),  -- Marketing Manager reports to CEO
+('Taylor', 'Brooks', 5, 4),  -- Social Media Specialist reports to Marketing Manager
+('Jordan', 'Reed', 6, 4),  -- Branding Strategist reports to Marketing Manager
 
 -- Production Team
-('Michael', 'Henderson', 7),  -- Lead Producer
-('Riley', 'Carter', 8),  -- Music Producer
-('Pat', 'Sinclair', 8),  -- Music Producer
-('Mike', 'Dean', 8),  -- Music Producer
-('Casey', 'Dunn', 9),  -- Production Assistant
+('Michael', 'Henderson', 7, 1),  -- Lead Producer reports to CEO
+('Riley', 'Carter', 8, 7),  -- Music Producer reports to Lead Producer
+('Pat', 'Sinclair', 8, 7),  -- Music Producer reports to Lead Producer
+('Mike', 'Dean', 8, 7),  -- Music Producer reports to Lead Producer
+('Casey', 'Dunn', 9, 8),  -- Production Assistant reports to Music Producer
 
 -- Engineering Team
-('David', 'Brown', 10),  -- Lead Engineer
-('Jamie', 'Nguyen', 11),  -- Sound Engineer
-('Dave', 'Jones', 11),  -- Sound Engineer
-('Morgan', 'Sampson', 12),  -- Mixing Engineer
-('Sasha', 'Peters', 13),  -- Mastering Engineer
+('David', 'Brown', 10, 1),  -- Lead Engineer reports to CEO
+('Jamie', 'Nguyen', 11, 10),  -- Sound Engineer reports to Lead Engineer
+('Dave', 'Jones', 11, 10),  -- Sound Engineer reports to Lead Engineer
+('Morgan', 'Sampson', 12, 10),  -- Mixing Engineer reports to Lead Engineer
+('Sasha', 'Peters', 13, 10),  -- Mastering Engineer reports to Lead Engineer
 
 -- Artist Management
-('Taylor', 'Adams', 14),  -- Artist Manager
-('Jordan', 'Hayes', 14),  -- Artist Manager
-('Sam', 'Monroe', 15),  -- Assistant Artist Manager
+('Taylor', 'Adams', 14, 3),  -- Artist Manager reports to COO
+('Jordan', 'Hayes', 14, 3),  -- Artist Manager reports to COO
+('Sam', 'Monroe', 15, 14),  -- Assistant Artist Manager reports to Artist Manager
 
 -- Artists (Directly employed by the label)
-('Rachel', 'Green', 30),  -- Artist
-('Ross', 'Geller', 30),  -- Artist
-('Monica', 'Bing', 30),  -- Artist
+('Rachel', 'Green', 30, 14),  -- Artist managed by Taylor Adams
+('Ross', 'Geller', 30, 14),  -- Artist managed by Jordan Hayes
+('Monica', 'Bing', 30, 15),  -- Artist managed by Sam Monroe
 
 -- More Artists (Independent or signed artists with label access)
-('Joey', 'Tribbiani', 30),  -- Artist
-('Chandler', 'Bing', 30),  -- Artist
-('Phoebe', 'Buffay', 30),  -- Artist
+('Joey', 'Tribbiani', 30, 14),  -- Artist
+('Chandler', 'Bing', 30, 14),  -- Artist
+('Phoebe', 'Buffay', 30, 15),  -- Artist
 
 -- Additional Staff (Label growing with Assistants or Team Leads)
-('Carter', 'Davis', 12),  -- Mixing Engineer
-('Alexis', 'Grant', 8),  -- Music Producer
-('Harper', 'Lewis', 9),  -- Production Assistant
-('Reese', 'Williams', 5),  -- Social Media Specialist
+('Carter', 'Davis', 12, 10),  -- Mixing Engineer reports to Lead Engineer
+('Alexis', 'Grant', 8, 7),  -- Music Producer reports to Lead Producer
+('Harper', 'Lewis', 9, 7),  -- Production Assistant reports to Lead Producer
+('Reese', 'Williams', 5, 4),  -- Social Media Specialist reports to Marketing Manager
 
 -- HR Department
-('Leslie', 'Parker', 16),  -- HR Manager
-('Frank', 'Garcia', 17),  -- Recruiter
-('Ava', 'Morris', 18),  -- Payroll Specialist
+('Leslie', 'Parker', 16, 1),  -- HR Manager reports to CEO
+('Frank', 'Garcia', 17, 16),  -- Recruiter reports to HR Manager
+('Ava', 'Morris', 18, 16),  -- Payroll Specialist reports to HR Manager
 
 -- Legal Department
-('Riley', 'Ford', 19),  -- Head of Legal
-('Maya', 'Turner', 20),  -- Contract Specialist
+('Riley', 'Ford', 19, 1),  -- Head of Legal reports to CEO
+('Maya', 'Turner', 20, 19),  -- Contract Specialist reports to Head of Legal
 
 -- A&R Department
-('Taylor', 'Adams', 21),  -- A&R Director
-('Chris', 'Watts', 22),  -- A&R Scout
+('Taylor', 'Adams', 21, 1),  -- A&R Director reports to CEO
+('Chris', 'Watts', 22, 21),  -- A&R Scout reports to A&R Director
 
 -- Operations
-('Sarah', 'Lee', 23),  -- Studio Manager
-('James', 'Clark', 24),  -- Operations Manager
+('Sarah', 'Lee', 23, 1),  -- Studio Manager reports to CEO
+('James', 'Clark', 24, 23),  -- Operations Manager reports to Studio Manager
 
 -- IT Department
-('Jesse', 'Brown', 25),  -- IT Manager
-('Emma', 'Rodriguez', 26),  -- IT Support Specialist
+('Jesse', 'Brown', 25, 1),  -- IT Manager reports to CEO
+('Emma', 'Rodriguez', 26, 25),  -- IT Support Specialist reports to IT Manager
 
 -- Creative Team
-('Chris', 'Rivera', 27),  -- Creative Director
-('Alex', 'Sims', 28),  -- Graphic Designer
-('Jordan', 'Taylor', 29);  -- Videographer
+('Chris', 'Rivera', 27, 1),  -- Creative Director reports to CEO
+('Alex', 'Sims', 28, 27),  -- Graphic Designer reports to Creative Director
+('Jordan', 'Taylor', 29, 27);  -- Videographer reports to Creative Director
