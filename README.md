@@ -34,7 +34,7 @@ cd Week-12-Challenge
 npm install
 ```
 
-4.	Install PostgreSQL if you haven’t already: ![PostgreSQL Installation Guide](https://www.postgresql.org/download/)
+4.	Install PostgreSQL if you haven’t already: [PostgreSQL Installation Guide](https://www.postgresql.org/download/)
 
 5.	Set up the database:
 •	Ensure your PostgreSQL server is running.
@@ -65,7 +65,7 @@ node index.js
 •	View employees by manager or department.
 •	Remove employees, roles, or departments.
 
-![Walkthrough Video](https://drive.google.com/file/d/1dMHIO_uBVVycaI1JfX9E-tCu8FtZurcZ/view?usp=sharing)
+[Walkthrough Video](https://drive.google.com/file/d/1dMHIO_uBVVycaI1JfX9E-tCu8FtZurcZ/view?usp=sharing)
 
 ## Features
 
