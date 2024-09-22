@@ -226,7 +226,7 @@ function addRole() {
       value: id,
     }));
 
-    prompt([
+    inquirer.prompt([
       {
         name: 'title',
         message: 'What is the name of the role?',
@@ -259,7 +259,7 @@ function viewDepartments() {
 
 // add departments
 function addDepartment() {
-  prompt({
+  inquirer.prompt({
     name: 'name',
     message: 'What is the name of the department?',
   })
