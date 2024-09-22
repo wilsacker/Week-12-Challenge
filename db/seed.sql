@@ -4,7 +4,13 @@ INSERT INTO department (name) VALUES
 ('Marketing'),
 ('Production'),
 ('Engineering'),
-('Artist Management');
+('Artist Management'),
+('Human Resources'),
+('Legal'),
+('A&R'),
+('Operations'),
+('IT Support'),
+('Creative');
 
 -- Insert initial roles
 INSERT INTO role (title, salary, department_id) VALUES 
@@ -33,10 +39,36 @@ INSERT INTO role (title, salary, department_id) VALUES
 ('Artist Manager', 85000, 5),
 ('Assistant Artist Manager', 50000, 5),
 
+-- HR
+('HR Manager', 70000, 6),
+('Recruiter', 50000, 6),
+('Payroll Specialist', 55000, 6),
+
+-- Legal
+('Head of Legal', 120000, 7),
+('Contract Specialist', 75000, 7),
+
+-- A&R
+('A&R Director', 95000, 8),
+('A&R Scout', 55000, 8),
+
+-- Operations and Studio Management
+('Studio Manager', 70000, 9),
+('Operations Manager', 75000, 9),
+
+-- IT Support
+('IT Manager', 80000, 10),
+('IT Support Specialist', 50000, 10),
+
+-- Creative Team
+('Creative Director', 90000, 11),
+('Graphic Designer', 60000, 11),
+('Videographer', 55000, 11),
+
 -- Artists (Some artists are directly employed by the label)
 ('Artist', 75000, 5);
 
--- Insert initial employees (35 employees)
+-- Insert initial employees (approximately 45 employees)
 -- Executive Management
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
 ('Alex', 'Johnson', 1, NULL),  -- CEO
@@ -52,11 +84,13 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ('Michael', 'Henderson', 7, 1),  -- Lead Producer
 ('Riley', 'Carter', 8, 7),  -- Music Producer
 ('Pat', 'Sinclair', 8, 7),  -- Music Producer
+('Mike', 'Dean', 8, 7),  -- Music Producer
 ('Casey', 'Dunn', 9, 8),  -- Production Assistant
 
 -- Engineering Team
 ('David', 'Brown', 10, 1),  -- Lead Engineer
 ('Jamie', 'Nguyen', 11, 10),  -- Sound Engineer
+('Dave', 'Jones', 11, 10),  -- Sound Engineer
 ('Morgan', 'Sampson', 12, 10),  -- Mixing Engineer
 ('Sasha', 'Peters', 13, 10),  -- Mastering Engineer
 
@@ -80,4 +114,30 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ('Carter', 'Davis', 12, 10),  -- Mixing Engineer, under Lead Engineer
 ('Alexis', 'Grant', 8, 7),  -- Music Producer, under Lead Producer
 ('Harper', 'Lewis', 9, 7),  -- Production Assistant, under Lead Producer
-('Reese', 'Williams', 5, 4);  -- Social Media Specialist, under Marketing Manager
+('Reese', 'Williams', 5, 4),  -- Social Media Specialist, under Marketing Manager
+
+-- HR Department
+('Leslie', 'Parker', 20, 1),  -- HR Manager
+('Frank', 'Garcia', 21, 20),  -- Recruiter
+('Ava', 'Morris', 22, 20),  -- Payroll Specialist
+
+-- Legal Department
+('Riley', 'Ford', 23, 1),  -- Head of Legal
+('Maya', 'Turner', 24, 23),  -- Contract Specialist
+
+-- A&R Department
+('Taylor', 'Adams', 25, 1),  -- A&R Director
+('Chris', 'Watts', 26, 25),  -- A&R Scout
+
+-- Operations
+('Sarah', 'Lee', 27, 1),  -- Studio Manager
+('James', 'Clark', 28, 27),  -- Operations Manager
+
+-- IT Department
+('Jesse', 'Brown', 29, 1),  -- IT Manager
+('Emma', 'Rodriguez', 30, 29),  -- IT Support Specialist
+
+-- Creative Team
+('Chris', 'Rivera', 31, 1),  -- Creative Director
+('Alex', 'Sims', 32, 31),  -- Graphic Designer
+('Jordan', 'Taylor', 33, 31);  -- Videographer
