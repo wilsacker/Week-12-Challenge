@@ -1,7 +1,7 @@
 const figlet = require('figlet');
 const boxen = require('boxen');
 const inquirer = require('inquirer');  // For the command-line menu
-const { viewDepartments } = require('./db/index');  // Import your functions from db/index.js
+const { viewDepartments, addDepartment } = require('./db/index');
 
 // Display banner and start menu
 function showBanner() {
@@ -50,10 +50,27 @@ function init() {
     ])
     .then((answer) => {
       switch (answer.action) {
-        case 'View all departments':
+        case 'View All Employees':
+          viewEmployees();
+          break;
+        case 'Add Employee':
+          addEmployee();
+          break;
+        case 'Update Employee Role':
+          updateEmployeeRole();
+          break;
+        case 'View All Roles':
+          viewRoles();
+          break;
+        case 'Add Role':
+          addRole();
+          break;
+        case 'View All Departments':
           viewDepartments();
           break;
-        // Add cases for other actions as you build them.
+        case 'Add Department':
+          addDepartment();
+          break;
         case 'Exit':
           console.log('Goodbye!');
           process.exit();
