@@ -68,75 +68,75 @@ INSERT INTO role (title, salary, department_id) VALUES
 -- Artists (Some artists are directly employed by the label)
 ('Artist', 75000, 5);
 
--- Insert initial employees
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
+-- Insert initial employees (without manager_id)
+INSERT INTO employee (first_name, last_name, role_id) VALUES 
 -- Executive Management
-('Alex', 'Johnson', 1, NULL),  -- CEO
-('Dana', 'Fitzgerald', 2, 1),  -- CFO
-('Chris', 'Williams', 3, 1),  -- COO
+('Alex', 'Johnson', 1),  -- CEO
+('Dana', 'Fitzgerald', 2),  -- CFO
+('Chris', 'Williams', 3),  -- COO
 
 -- Marketing Team
-('Jessie', 'Kim', 4, 1),  -- Marketing Manager
-('Taylor', 'Brooks', 5, 4),  -- Social Media Specialist
-('Jordan', 'Reed', 6, 4),  -- Branding Strategist
+('Jessie', 'Kim', 4),  -- Marketing Manager
+('Taylor', 'Brooks', 5),  -- Social Media Specialist
+('Jordan', 'Reed', 6),  -- Branding Strategist
 
 -- Production Team
-('Michael', 'Henderson', 7, 1),  -- Lead Producer
-('Riley', 'Carter', 8, 7),  -- Music Producer
-('Pat', 'Sinclair', 8, 7),  -- Music Producer
-('Mike', 'Dean', 8, 7),  -- Music Producer
-('Casey', 'Dunn', 9, 8),  -- Production Assistant
+('Michael', 'Henderson', 7),  -- Lead Producer
+('Riley', 'Carter', 8),  -- Music Producer
+('Pat', 'Sinclair', 8),  -- Music Producer
+('Mike', 'Dean', 8),  -- Music Producer
+('Casey', 'Dunn', 9),  -- Production Assistant
 
 -- Engineering Team
-('David', 'Brown', 10, 1),  -- Lead Engineer
-('Jamie', 'Nguyen', 11, 10),  -- Sound Engineer
-('Dave', 'Jones', 11, 10),  -- Sound Engineer
-('Morgan', 'Sampson', 12, 10),  -- Mixing Engineer
-('Sasha', 'Peters', 13, 10),  -- Mastering Engineer
+('David', 'Brown', 10),  -- Lead Engineer
+('Jamie', 'Nguyen', 11),  -- Sound Engineer
+('Dave', 'Jones', 11),  -- Sound Engineer
+('Morgan', 'Sampson', 12),  -- Mixing Engineer
+('Sasha', 'Peters', 13),  -- Mastering Engineer
 
 -- Artist Management
-('Taylor', 'Adams', 14, 1),  -- Artist Manager
-('Jordan', 'Hayes', 14, 1),  -- Artist Manager
-('Sam', 'Monroe', 15, 14),  -- Assistant Artist Manager
+('Taylor', 'Adams', 14),  -- Artist Manager
+('Jordan', 'Hayes', 14),  -- Artist Manager
+('Sam', 'Monroe', 15),  -- Assistant Artist Manager
 
 -- Artists (Directly employed by the label)
-('Rachel', 'Green', 16, 14),  -- Artist managed by Taylor Adams
-('Ross', 'Geller', 16, 14),  -- Artist managed by Jordan Hayes
-('Monica', 'Bing', 16, 15),  -- Artist managed by Sam Monroe
+('Rachel', 'Green', 30),  -- Artist
+('Ross', 'Geller', 30),  -- Artist
+('Monica', 'Bing', 30),  -- Artist
 
 -- More Artists (Independent or signed artists with label access)
-('Joey', 'Tribbiani', 16, 14),  -- Artist
-('Chandler', 'Bing', 16, 14),  -- Artist
-('Phoebe', 'Buffay', 16, 15),  -- Artist
+('Joey', 'Tribbiani', 30),  -- Artist
+('Chandler', 'Bing', 30),  -- Artist
+('Phoebe', 'Buffay', 30),  -- Artist
 
 -- Additional Staff (Label growing with Assistants or Team Leads)
-('Carter', 'Davis', 12, 10),  -- Mixing Engineer, under Lead Engineer
-('Alexis', 'Grant', 8, 7),  -- Music Producer, under Lead Producer
-('Harper', 'Lewis', 9, 7),  -- Production Assistant, under Lead Producer
-('Reese', 'Williams', 5, 4),  -- Social Media Specialist, under Marketing Manager
+('Carter', 'Davis', 12),  -- Mixing Engineer
+('Alexis', 'Grant', 8),  -- Music Producer
+('Harper', 'Lewis', 9),  -- Production Assistant
+('Reese', 'Williams', 5),  -- Social Media Specialist
 
 -- HR Department
-('Leslie', 'Parker', 16, 1),  -- HR Manager
-('Frank', 'Garcia', 17, 20),  -- Recruiter
-('Ava', 'Morris', 18, 20),  -- Payroll Specialist
+('Leslie', 'Parker', 16),  -- HR Manager
+('Frank', 'Garcia', 17),  -- Recruiter
+('Ava', 'Morris', 18),  -- Payroll Specialist
 
 -- Legal Department
-('Riley', 'Ford', 19, 1),  -- Head of Legal
-('Maya', 'Turner', 20, 23),  -- Contract Specialist
+('Riley', 'Ford', 19),  -- Head of Legal
+('Maya', 'Turner', 20),  -- Contract Specialist
 
 -- A&R Department
-('Taylor', 'Adams', 21, 1),  -- A&R Director
-('Chris', 'Watts', 22, 25),  -- A&R Scout
+('Taylor', 'Adams', 21),  -- A&R Director
+('Chris', 'Watts', 22),  -- A&R Scout
 
 -- Operations
-('Sarah', 'Lee', 23, 1),  -- Studio Manager
-('James', 'Clark', 24, 27),  -- Operations Manager
+('Sarah', 'Lee', 23),  -- Studio Manager
+('James', 'Clark', 24),  -- Operations Manager
 
 -- IT Department
-('Jesse', 'Brown', 25, 1),  -- IT Manager
-('Emma', 'Rodriguez', 26, 29),  -- IT Support Specialist
+('Jesse', 'Brown', 25),  -- IT Manager
+('Emma', 'Rodriguez', 26),  -- IT Support Specialist
 
 -- Creative Team
-('Chris', 'Rivera', 27, 1),  -- Creative Director
-('Alex', 'Sims', 28, 31),  -- Graphic Designer
-('Jordan', 'Taylor', 29, 31);  -- Videographer
+('Chris', 'Rivera', 27),  -- Creative Director
+('Alex', 'Sims', 28),  -- Graphic Designer
+('Jordan', 'Taylor', 29);  -- Videographer
