@@ -112,7 +112,7 @@ function viewEmployees() {
 
 // Add employee
 function addEmployee() {
-  prompt([
+  inquirer.prompt([
     {
       name: 'first_name',
       message: "What is the employee's first name?",
@@ -131,7 +131,7 @@ function addEmployee() {
         value: id,
       }));
 
-      prompt({
+      inquirer.prompt({
         type: 'list',
         name: 'roleId',
         message: "What is the employee's role?",
@@ -139,9 +139,35 @@ function addEmployee() {
       }).then((res) => {
         let roleId = res.roleId;
 
-        db.createEmployee({ firstName, lastName, roleId })
-          .then(() => console.log(`Added ${firstName} ${lastName} to the database`))
-          .then(() => init());  // Return to the main menu after adding an employee
+        db.findAllEmployees().then(({ rows }) => {
+          const managerChoices = rows.map(
+            ({ id, first_name, last_name }) => ({
+              name: `${first_name} ${last_name}`,
+              value: id,
+            })
+          );
+
+          managerChoices.unshift({ name: 'None', value: null });
+
+          inquirer.prompt({
+            type: 'list',
+            name: 'managerId',
+            message: "Who is the employee's manager?",
+            choices: managerChoices,
+          })
+            .then((res) => {
+              const employee = {
+                manager_id: res.managerId,
+                role_id: roleId,
+                first_name: firstName,
+                last_name: lastName,
+              };
+
+              db.createEmployee(employee)
+                .then(() => console.log(`Added ${firstName} ${lastName} to the database`))
+                .then(() => init());  // Return to main menu after adding employee
+            });
+        });
       });
     });
   });
