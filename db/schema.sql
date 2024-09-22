@@ -1,3 +1,12 @@
+-- Drop the database if it exists
+DROP DATABASE IF EXISTS employee_tracker;
+
+-- Create the new database
+CREATE DATABASE employee_tracker;
+
+-- Connect to the new database
+\c employee_tracker
+
 -- Drop tables if they already exist
 DROP TABLE IF EXISTS employee CASCADE;
 DROP TABLE IF EXISTS role CASCADE;
