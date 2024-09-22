@@ -3,6 +3,9 @@ const figlet = require('figlet');
 const boxen = require('boxen');
 const db = require('./db');  // Import DB class
 
+// Shows the banner first, then initializes app
+showBanner();
+
 // Display banner and start menu
 function showBanner() {
   figlet('Employee Manager', (err, data) => {
@@ -27,165 +30,263 @@ function showBanner() {
   });
 }
 
-// Menu function
 function init() {
-  inquirer
-    .prompt([
-      {
-        type: 'list',
-        name: 'action',
-        message: 'What would you like to do?',
-        choices: [
-          'View All Employees',
-          'Add Employee',
-          'Update Employee Role',
-          'View All Roles',
-          'Add Role',
-          'View All Departments',
-          'Add Department',
-          'Exit'
-        ],
-      },
-    ])
-    .then((answer) => {
-      switch (answer.action) {
-        case 'View All Employees':
-          viewEmployees();
-          break;
-        case 'Add Employee':
-          addEmployee();
-          break;
-        case 'Update Employee Role':
-          updateEmployeeRole();
-          break;
-        case 'View All Roles':
-          viewRoles();
-          break;
-        case 'Add Role':
-          addRole();
-          break;
-        case 'View All Departments':
-          viewDepartments();
-          break;
-        case 'Add Department':
-          addDepartment();
-          break;
-        case 'Exit':
-          console.log('Goodbye!');
-          process.exit();
-      }
-    });
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'choice',
+      message: 'What would you like to do?',
+      choices: [
+        {
+          name: 'View All Employees',
+          value: 'VIEW_EMPLOYEES',
+        },
+        {
+          name: 'Add Employee',
+          value: 'ADD_EMPLOYEE',
+        },
+        {
+          name: 'Update Employee Role',
+          value: 'UPDATE_EMPLOYEE_ROLE',
+        },
+        {
+          name: 'View All Roles',
+          value: 'VIEW_ROLES',
+        },
+        {
+          name: 'Add Role',
+          value: 'ADD_ROLE',
+        },
+        {
+          name: 'View All Departments',
+          value: 'VIEW_DEPARTMENTS',
+        },
+        {
+          name: 'Add Department',
+          value: 'ADD_DEPARTMENT',
+        },
+        {
+          name: 'Quit',
+          value: 'QUIT',
+        },
+      ],
+    },
+  ]).then((res) => {
+    switch (res.choice) {
+      case 'VIEW_EMPLOYEES':
+        viewEmployees();
+        break;
+      case 'ADD_EMPLOYEE':
+        addEmployee();
+        break;
+      case 'UPDATE_EMPLOYEE_ROLE':
+        updateEmployeeRole();
+        break;
+      case 'VIEW_ROLES':
+        viewRoles();
+        break;
+      case 'ADD_ROLE':
+        addRole();
+        break;
+      case 'VIEW_DEPARTMENTS':
+        viewDepartments();
+        break;
+      case 'ADD_DEPARTMENT':
+        addDepartment();
+        break;
+      default:
+        quit();
+    }
+  });
 }
 
 // View all employees
-async function viewEmployees() {
-  try {
-    const res = await pool.query(`
-      SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, employee.manager_id
-      FROM employee
-      JOIN role ON employee.role_id = role.id
-      JOIN department ON role.department_id = department.id
-    `);
-    console.table(res.rows);
-    init();  // Return to the menu
-  } catch (err) {
-    console.error('Error retrieving employees:', err);
-  }
+function viewEmployees() {
+  db.findAllEmployees()
+    .then(({ rows }) => {
+      console.table(rows);
+      loadMainPrompts();  // Return to the menu
+    })
+    .catch((err) => console.error('Error retrieving employees:', err));
 }
 
-// Add employee
-async function addEmployee() {
-  const answers = await inquirer.prompt([
-    { name: 'first_name', type: 'input', message: 'Enter employee first name:' },
-    { name: 'last_name', type: 'input', message: 'Enter employee last name:' },
-    { name: 'role_id', type: 'input', message: 'Enter employee role ID:' },
-    { name: 'manager_id', type: 'input', message: 'Enter employee manager ID (if any):' }
-  ]);
-
-  try {
-    const res = await pool.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4)', [answers.first_name, answers.last_name, answers.role_id, answers.manager_id || null]);
-    console.log(`Added employee: ${answers.first_name} ${answers.last_name}`);
-    init();  // Return to the menu
-  } catch (err) {
-    console.error('Error adding employee:', err);
-  }
-}
-
-// Update employee role
-async function updateEmployeeRole() {
-  const answers = await inquirer.prompt([
-    { name: 'employee_id', type: 'input', message: 'Enter employee ID to update:' },
-    { name: 'new_role_id', type: 'input', message: 'Enter new role ID for the employee:' }
-  ]);
-
-  try {
-    const res = await pool.query('UPDATE employee SET role_id = $1 WHERE id = $2', [answers.new_role_id, answers.employee_id]);
-    console.log(`Updated employee's role.`);
-    init();  // Return to the menu
-  } catch (err) {
-    console.error('Error updating employee role:', err);
-  }
-}
-
-// View all roles
-async function viewRoles() {
-  try {
-    const res = await pool.query(`
-      SELECT role.id, role.title, department.name AS department, role.salary 
-      FROM role 
-      JOIN department ON role.department_id = department.id
-    `);
-    console.table(res.rows);
-    init();  // Return to the menu
-  } catch (err) {
-    console.error('Error retrieving roles:', err);
-  }
-}
-
-// Add role
-async function addRole() {
-  const answers = await inquirer.prompt([
-    { name: 'title', type: 'input', message: 'Enter role title:' },
-    { name: 'salary', type: 'input', message: 'Enter role salary:' },
-    { name: 'department_id', type: 'input', message: 'Enter department ID for the role:' }
-  ]);
-
-  try {
-    const res = await pool.query('INSERT INTO role (title, salary, department_id) VALUES ($1, $2, $3)', [answers.title, answers.salary, answers.department_id]);
-    console.log(`Added role: ${answers.title}`);
-    init();  // Return to the menu
-  } catch (err) {
-    console.error('Error adding role:', err);
-  }
-}
-
-
-// View all departments
-async function viewDepartments() {
-  try {
-    const res = await pool.query('SELECT * FROM department');
-    console.table(res.rows);  // Display the result in a table format
-    init();  // Call init to return to the menu
-  } catch (err) {
-    console.error('Error retrieving departments:', err);
-  }
-}
-
-async function addDepartment() {
-  const answer = await inquirer.prompt({
-    name: 'name',
-    type: 'input',
-    message: 'Enter the name of the department:',
+// Add an employee
+function addEmployee() {
+  inquirer.prompt([
+    { name: 'first_name', message: 'Enter employee first name:' },
+    { name: 'last_name', message: 'Enter employee last name:' },
+    { name: 'role_id', message: 'Enter role ID for the employee:' },
+    { name: 'manager_id', message: 'Enter manager ID for the employee (or press Enter for no manager):', default: null }
+  ]).then((answers) => {
+    db.createEmployee(answers.first_name, answers.last_name, answers.role_id, answers.manager_id)
+      .then(() => {
+        console.log('Employee added successfully!');
+        loadMainPrompts();
+      })
+      .catch((err) => console.error('Error adding employee:', err));
   });
-
-  try {
-    const res = await pool.query('INSERT INTO department (name) VALUES ($1)', [answer.name]);
-    console.log(`Added department: ${answer.name}`);
-    init();  // Return to the main menu
-  } catch (err) {
-    console.error('Error adding department:', err);
-  }
 }
 
-// Initialize the app
+// Start the app
 showBanner();
+
+
+// Menu function
+// function init() {
+//   inquirer
+//     .prompt([
+//       {
+//         type: 'list',
+//         name: 'action',
+//         message: 'What would you like to do?',
+//         choices: [
+//           'View All Employees',
+//           'Add Employee',
+//           'Update Employee Role',
+//           'View All Roles',
+//           'Add Role',
+//           'View All Departments',
+//           'Add Department',
+//           'Exit'
+//         ],
+//       },
+//     ])
+//     .then((answer) => {
+//       switch (answer.action) {
+//         case 'View All Employees':
+//           viewEmployees();
+//           break;
+//         case 'Add Employee':
+//           addEmployee();
+//           break;
+//         case 'Update Employee Role':
+//           updateEmployeeRole();
+//           break;
+//         case 'View All Roles':
+//           viewRoles();
+//           break;
+//         case 'Add Role':
+//           addRole();
+//           break;
+//         case 'View All Departments':
+//           viewDepartments();
+//           break;
+//         case 'Add Department':
+//           addDepartment();
+//           break;
+//         case 'Exit':
+//           console.log('Goodbye!');
+//           process.exit();
+//       }
+//     });
+// }
+
+// // View all employees
+// async function viewEmployees() {
+//   try {
+//     const res = await pool.query(`
+//       SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, employee.manager_id
+//       FROM employee
+//       JOIN role ON employee.role_id = role.id
+//       JOIN department ON role.department_id = department.id
+//     `);
+//     console.table(res.rows);
+//     init();  // Return to the menu
+//   } catch (err) {
+//     console.error('Error retrieving employees:', err);
+//   }
+// }
+
+// // Add employee
+// async function addEmployee() {
+//   const answers = await inquirer.prompt([
+//     { name: 'first_name', type: 'input', message: 'Enter employee first name:' },
+//     { name: 'last_name', type: 'input', message: 'Enter employee last name:' },
+//     { name: 'role_id', type: 'input', message: 'Enter employee role ID:' },
+//     { name: 'manager_id', type: 'input', message: 'Enter employee manager ID (if any):' }
+//   ]);
+
+//   try {
+//     const res = await pool.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ($1, $2, $3, $4)', [answers.first_name, answers.last_name, answers.role_id, answers.manager_id || null]);
+//     console.log(`Added employee: ${answers.first_name} ${answers.last_name}`);
+//     init();  // Return to the menu
+//   } catch (err) {
+//     console.error('Error adding employee:', err);
+//   }
+// }
+
+// // Update employee role
+// async function updateEmployeeRole() {
+//   const answers = await inquirer.prompt([
+//     { name: 'employee_id', type: 'input', message: 'Enter employee ID to update:' },
+//     { name: 'new_role_id', type: 'input', message: 'Enter new role ID for the employee:' }
+//   ]);
+
+//   try {
+//     const res = await pool.query('UPDATE employee SET role_id = $1 WHERE id = $2', [answers.new_role_id, answers.employee_id]);
+//     console.log(`Updated employee's role.`);
+//     init();  // Return to the menu
+//   } catch (err) {
+//     console.error('Error updating employee role:', err);
+//   }
+// }
+
+// // View all roles
+// async function viewRoles() {
+//   try {
+//     const res = await pool.query(`
+//       SELECT role.id, role.title, department.name AS department, role.salary 
+//       FROM role 
+//       JOIN department ON role.department_id = department.id
+//     `);
+//     console.table(res.rows);
+//     init();  // Return to the menu
+//   } catch (err) {
+//     console.error('Error retrieving roles:', err);
+//   }
+// }
+
+// // Add role
+// async function addRole() {
+//   const answers = await inquirer.prompt([
+//     { name: 'title', type: 'input', message: 'Enter role title:' },
+//     { name: 'salary', type: 'input', message: 'Enter role salary:' },
+//     { name: 'department_id', type: 'input', message: 'Enter department ID for the role:' }
+//   ]);
+
+//   try {
+//     const res = await pool.query('INSERT INTO role (title, salary, department_id) VALUES ($1, $2, $3)', [answers.title, answers.salary, answers.department_id]);
+//     console.log(`Added role: ${answers.title}`);
+//     init();  // Return to the menu
+//   } catch (err) {
+//     console.error('Error adding role:', err);
+//   }
+// }
+
+
+// // View all departments
+// async function viewDepartments() {
+//   try {
+//     const res = await pool.query('SELECT * FROM department');
+//     console.table(res.rows);  // Display the result in a table format
+//     init();  // Call init to return to the menu
+//   } catch (err) {
+//     console.error('Error retrieving departments:', err);
+//   }
+// }
+
+// async function addDepartment() {
+//   const answer = await inquirer.prompt({
+//     name: 'name',
+//     type: 'input',
+//     message: 'Enter the name of the department:',
+//   });
+
+//   try {
+//     const res = await pool.query('INSERT INTO department (name) VALUES ($1)', [answer.name]);
+//     console.log(`Added department: ${answer.name}`);
+//     init();  // Return to the main menu
+//   } catch (err) {
+//     console.error('Error adding department:', err);
+//   }
+// }
