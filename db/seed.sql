@@ -68,9 +68,9 @@ INSERT INTO role (title, salary, department_id) VALUES
 -- Artists (Some artists are directly employed by the label)
 ('Artist', 75000, 5);
 
--- Insert initial employees (approximately 45 employees)
--- Executive Management
+-- Insert initial employees
 INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
+-- Executive Management
 ('Alex', 'Johnson', 1, NULL),  -- CEO
 ('Dana', 'Fitzgerald', 2, 1),  -- CFO
 ('Chris', 'Williams', 3, 1),  -- COO
@@ -107,10 +107,9 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 -- More Artists (Independent or signed artists with label access)
 ('Joey', 'Tribbiani', 16, 14),  -- Artist
 ('Chandler', 'Bing', 16, 14),  -- Artist
-('Phoebe', 'Buffay', 16, 15);  -- Artist
+('Phoebe', 'Buffay', 16, 15),  -- Artist
 
 -- Additional Staff (Label growing with Assistants or Team Leads)
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES 
 ('Carter', 'Davis', 12, 10),  -- Mixing Engineer, under Lead Engineer
 ('Alexis', 'Grant', 8, 7),  -- Music Producer, under Lead Producer
 ('Harper', 'Lewis', 9, 7),  -- Production Assistant, under Lead Producer
